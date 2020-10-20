@@ -91,7 +91,7 @@ export default {
       hideInput: false,
       noRoads: false,
       clicked: false,
-      showWarning: hasValidArea, 
+      showWarning: hasValidArea,
       mainActionText: hasValidArea ? 'Download Area' : FIND_TEXT,
       suggestions: []
     }
@@ -143,7 +143,7 @@ export default {
             }, 50)
           } else {
               this.suggestionsLoaded = true;
-              this.suggestions = suggestions; 
+              this.suggestions = suggestions;
           }
         });
     },
@@ -227,11 +227,11 @@ export default {
 
     useOSM(suggestion) {
       this.loading = 'Connecting to OpenStreetMap...'
-      
-      // it may take a while to load data. 
+
+      // it may take a while to load data.
       this.restartLoadingMonitor();
       Query.runFromOptions(new LoadOptions({
-        wayFilter: Query.Road,
+        wayFilter: Query.Footways,
         areaId: suggestion.areaId,
         bbox: suggestion.bbox
       }), this.generateNewProgressToken())

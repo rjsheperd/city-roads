@@ -18,6 +18,10 @@ export default class Query {
    */
   static Road = 'way[highway]';
 
+  static Sidewalks = 'way[sidewalk][sidewalk!="no"]';
+
+  static Footways = 'way[sidewalk][sidewalk!="no"](area.area); way[highway~"(path|footway)"]';
+
   /**
    * Reduced set of roads
    */
@@ -69,20 +73,20 @@ function runAllNominmantimQueries(parts) {
     return parts.map(part => {
       if (typeof part === 'string') {
         return part;
-      } 
+      }
       if (part.geoType === 'Area') return `area(${part.areaId})`;
       if (part.geoType === 'Coords') return part.lat + ',' + part.lon;
       if (part.geoType === 'Id') return `${part.osmType}(${part.osmId})`;
       if (part.geoType === 'Bbox') return part.bbox.join(',');
- 
+
     }).join('');
   }
-  
+
   function processNext() {
     if (lastProcessed >= parts.length) {
       return Promise.resolve();
     }
-    
+
     let part = parts[lastProcessed];
     lastProcessed += 1;
     if (typeof part === 'string') return processNext();
